@@ -1,0 +1,11 @@
+main: de.veenixdev.logger.PrimeLogger
+name: Prime-Logger
+version: 1.0-SNAPSHOT
+author: VeenixDev
+api-version: 1.16
+description: Advanced Loggin Plugin for more readable logs!
+commands:
+  query:
+    description: Searches in a specific log for something.
+    usage: /query <file> <exact> <search for>
+    permission: prime.logger.query
