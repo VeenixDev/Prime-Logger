@@ -65,7 +65,6 @@ public class Log {
         List<String> result = new ArrayList<>();
 
         for(String s : read) {
-            System.out.println(s);
             String[] arr = s.split("]", 2);
             arr = arr[1].split(":", 2);
 
