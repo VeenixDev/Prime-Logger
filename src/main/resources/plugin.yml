@@ -1,6 +1,6 @@
 main: de.veenixdev.logger.PrimeLogger
 name: Prime-Logger
-version: 1.0-SNAPSHOT
+version: 1.0
 author: VeenixDev
 api-version: 1.16
 description: Advanced Loggin Plugin for more readable logs!

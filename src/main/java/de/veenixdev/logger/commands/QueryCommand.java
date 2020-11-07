@@ -17,14 +17,18 @@ public class QueryCommand implements TabExecutor {
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if(args.length >= 2) {
             if(PrimeLogger.getInstance().getFileManager().logExists(args[0])) {
-                Thread t = new Thread() {
-                    @Override
-                    public void run() {
-                        super.run();
-                    }
-                };
+                Thread thread = new Thread(() -> {
 
-                t.run();
+                    StringBuilder sb = new StringBuilder();
+
+                    for(int i = 2; i < args.length; i++) {
+                        sb.append(args[i]).append(" ");
+                    }
+
+                    PrimeLogger.getInstance().getFileManager().queryLogs(sender, args[0], sb.toString(), args[1].equals("true"));
+                });
+
+                thread.start();
             } else {
                 sender.sendMessage("Log doesn't exist");
             }
