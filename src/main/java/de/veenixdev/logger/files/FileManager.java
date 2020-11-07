@@ -9,9 +9,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -66,29 +63,20 @@ public class FileManager {
         boolean removeDate = false;
 
         if (logs.containsKey(log)) {
-            if(log.equalsIgnoreCase("joinQuit")) {
+            if(log.equalsIgnoreCase("joinQuit"))
                 removeDate = true;
-            }
+
             List<String> array = removeDate ? logs.get(log).read() : logs.get(log).readOnlyMessage();
             int counter = 1;
 
             while(search.endsWith(" ")) {
-                char[] c = search.toCharArray();
-
-                StringBuilder sb = new StringBuilder();
-
-                for(int i = 0; i < c.length - 1; i++) {
-                    sb.append(c[i]);
-                }
-
-                search = sb.toString();
+                search = new StringBuffer(search).deleteCharAt(search.length() - 1).toString();
             }
 
             if(removeDate) {
                 List<String> temp = new ArrayList<>();
                 for (String s : array) {
-                    String[] arr = s.split("] ", 2);
-                    temp.add(arr[1]);
+                    temp.add(s.split("] ", 2)[1]);
                 }
                 array = temp;
             }
