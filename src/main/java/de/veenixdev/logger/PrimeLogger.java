@@ -28,6 +28,10 @@ public class PrimeLogger extends JavaPlugin {
     @Getter
     private final String[] logsPath = new String[] {"logs.command", "logs.chat", "logs.blockPlace", "logs.blockBreak", "logs.joinQuit"};
 
+    /* Should files get deleted if they aren't used */
+    @Getter
+    private boolean deleteUnusedFiles;
+
     /* Does things when plugin gets loaded by the Server */
     @Override
     public void onLoad() {
@@ -49,8 +53,10 @@ public class PrimeLogger extends JavaPlugin {
         if(getConfig().getBoolean(logsPath[4]))
             fileManager.newLog("joinQuit");
 
-        fileManager.createQueryDeleteFile();
         loadConfig();
+        fileManager.createQueryDeleteFile();
+        if(deleteUnusedFiles)
+            fileManager.deleteUnusedFiles();
     }
 
     /* Does things when plugin gets enabled by the Server */
@@ -74,16 +80,27 @@ public class PrimeLogger extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage("§9Plugin started!");
     }
 
-    public void loadConfig() {
+    /* Does things when plugin gets disabled by the Server */
+    @Override
+    public void onDisable() {
+        reloadConfig();
         saveConfig();
+    }
 
+    private void loadConfig() {
+        /* Load Config.yml */
         getConfig().addDefault(logsPath[0], true);
         getConfig().addDefault(logsPath[1], true);
         getConfig().addDefault(logsPath[2], true);
         getConfig().addDefault(logsPath[3], true);
         getConfig().addDefault(logsPath[4], true);
 
+        getConfig().addDefault("deleteUnusedFiles", false);
+
         getConfig().options().copyDefaults(true);
         saveConfig();
+
+        /* Save values */
+        this.deleteUnusedFiles = getConfig().getBoolean("deleteUnusedFiles");
     }
 }
