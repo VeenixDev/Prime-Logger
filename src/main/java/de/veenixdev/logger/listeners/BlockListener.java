@@ -11,6 +11,9 @@ public class BlockListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onBlockPlace(BlockPlaceEvent event) {
+        if(!PrimeLogger.getInstance().getConfig().getBoolean(PrimeLogger.getInstance().getLogsPath()[3]))
+            return;
+
         event.getBlockPlaced();
         String txt = "{type:\"" + event.getBlock().getType().toString() + "\", x:" + event.getBlock().getX() +
                         ", y:" + event.getBlock().getY() + ", z:" + event.getBlock().getZ() + ", cancelled:" + event.isCancelled() + "}";
@@ -21,6 +24,9 @@ public class BlockListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onBlockBreak(BlockBreakEvent event) {
+        if(!PrimeLogger.getInstance().getConfig().getBoolean(PrimeLogger.getInstance().getLogsPath()[4]))
+            return;
+
         String txt = "{type:\"" + event.getBlock().getType().toString() + "\", x:" + event.getBlock().getX() +
                 ", y:" + event.getBlock().getY() + ", z:" + event.getBlock().getZ() + ", cancelled:" + event.isCancelled() + "}";
 
