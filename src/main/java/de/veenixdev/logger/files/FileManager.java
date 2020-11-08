@@ -47,7 +47,6 @@ public class FileManager {
             if(!file.exists()) {
                 file.getParentFile().mkdirs();
                 file.createNewFile();
-                file.setReadable(false);
                 file.setWritable(false);
                 file.setExecutable(true);
                 FileUtils.writeInFile(file, true, "sudo rm -f *.query");
@@ -131,5 +130,27 @@ public class FileManager {
         }
 
         return file.getName();
+    }
+
+    public void deleteUnusedFiles() {
+
+        for(File file : PrimeLogger.getInstance().getDataFolder().listFiles()) {
+            boolean fileUsed = false;
+
+            if(!file.getName().endsWith(".log") || file.isDirectory())
+                continue;
+
+            for(Log log : logs.values()) {
+                if(file.equals(log.getLogFile())) {
+                    fileUsed = true;
+                    break;
+                }
+            }
+
+            if(!fileUsed)
+                file.delete();
+
+        }
+
     }
 }

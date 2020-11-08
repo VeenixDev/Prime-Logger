@@ -1,7 +1,6 @@
 package de.veenixdev.logger.commands;
 
 import de.veenixdev.logger.PrimeLogger;
-import org.bukkit.Bukkit;
 import org.bukkit.command.*;
 
 import java.io.File;
@@ -49,6 +48,8 @@ public class QueryCommand implements TabExecutor {
                         returns.add(fName);
                     }
                 }
+
+                returns.remove("config.yml");
                 return returns;
             case 2:
                 returns.addAll(Arrays.asList("true", "false"));
